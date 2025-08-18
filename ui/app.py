@@ -1,15 +1,14 @@
 # app.py
 import streamlit as st
 
-# CSS를 사용하여 Streamlit의 경고 메시지 숨기기
-hide_streamlit_warnings_style = """
-<style>
-.st-emotion-cache-1f1t5x8.e1nzilvr4 {
-    display: none;
+st.markdown(""
+    <style>
+    body {
+        font-family: 'Nanum Gothic', sans-serif;
 }
 </style>
-"""
-st.markdown(hide_streamlit_warnings_style, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
+
 
 def main():
     st.title("CSS를 활용한 한글 폰트 설정")
@@ -208,6 +207,7 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
 
 
 
