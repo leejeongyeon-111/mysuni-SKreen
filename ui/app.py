@@ -193,3 +193,4 @@ else:
         else:
             display_movies_list(results, df)
 
+
