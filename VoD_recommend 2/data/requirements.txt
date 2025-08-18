@@ -3,7 +3,8 @@ pandas
 numpy
 scipy
 scikit-learn
+matplotlib
+seaborn
 requests
 streamlit-card
 pillow
-matplotlib
