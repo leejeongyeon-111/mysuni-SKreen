@@ -14,7 +14,7 @@ from streamlit_card import card
 def load_data():
     """CSV 파일을 로드하고 '매력도' 컬럼을 숫자형으로 변환합니다."""
     try:
-        df = pd.read_csv("https://raw.githubusercontent/leejeongyeon-111/mysuni-SKreen/main/영화DB(임시).csv")
+        df = pd.read_csv("https://raw.githubusercontent.com/leejeongyeon-111/mysuni-SKreen/refs/heads/main/%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%92%E1%85%AADB(%E1%84%8B%E1%85%B5%E1%86%B7%E1%84%89%E1%85%B5).csv")
         df['매력도'] = pd.to_numeric(df['매력도'], errors='coerce')
         return df
     except FileNotFoundError:
@@ -144,4 +144,5 @@ else:
         else:
             # 검색어와 필터가 모두 적용된 결과를 표시합니다.
             display_movies_list(results, df)
+
 
