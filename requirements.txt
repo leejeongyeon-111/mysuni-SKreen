@@ -1,0 +1,10 @@
+streamlit>=1.33
+pandas
+numpy
+scipy
+scikit-learn
+matplotlib
+seaborn
+requests
+streamlit-card
+pillow
