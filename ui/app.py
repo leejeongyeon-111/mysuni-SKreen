@@ -1,21 +1,5 @@
 # app.py
 import streamlit as st
-
-st.markdown(""
-    <style>
-    body {
-        font-family: 'Nanum Gothic', sans-serif;
-}
-</style>
-unsafe_allow_html=True)
-
-
-def main():
-    st.title("CSS를 활용한 한글 폰트 설정")
-    st.text("이 방법은 모든 OS에서 동일하게 작동합니다.")
-
-if __name__ == '__main__':
-    main()
     
 # ✅ 가장 먼저 페이지 설정
 st.set_page_config(page_title="SKreen", layout="wide")
@@ -207,6 +191,7 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
 
 
 
