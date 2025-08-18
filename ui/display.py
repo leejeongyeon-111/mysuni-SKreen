@@ -32,6 +32,17 @@ def set_korean_font():
     plt.rcParams['axes.unicode_minus'] = False
 
 
+
+hide_streamlit_warnings_style = """
+<style>
+.st-emotion-cache-1f1t5x8.e1nzilvr4 {
+    display: none;
+}
+</style>
+"""
+st.markdown(hide_streamlit_warnings_style, unsafe_allow_html=True)
+
+
 def format_number_display(raw_value):
     """
     다양한 숫자/문자 형식을 처리하여 천 단위 쉼표가 있는 문자열로 변환합니다.
@@ -229,3 +240,4 @@ def display_movies_list(results_df, full_df):
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
 
             st.markdown("---")
+
