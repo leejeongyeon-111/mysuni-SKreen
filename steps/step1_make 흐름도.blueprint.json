@@ -1,0 +1,3218 @@
+{
+    "name": "step1 make 흐름도 최최종",
+    "flow": [
+        {
+            "id": 7,
+            "module": "util:SetVariable2",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "name": "movieNm",
+                "scope": "roundtrip",
+                "value": "어벤져스"
+            },
+            "metadata": {
+                "designer": {
+                    "x": -595,
+                    "y": 161,
+                    "name": "영화 제목 입력"
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "movieNm",
+                        "type": "any",
+                        "label": "movieNm"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 47,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": -234,
+                    "y": 44
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 42,
+                            "module": "http:ActionSendData",
+                            "version": 3,
+                            "parameters": {
+                                "handleErrors": true,
+                                "useNewZLibDeCompress": true
+                            },
+                            "mapper": {
+                                "ca": "",
+                                "qs": [
+                                    {
+                                        "name": "api_key",
+                                        "value": "381149bb1f0a6e0c3169ce9ad56d0186"
+                                    },
+                                    {
+                                        "name": "query",
+                                        "value": "{{7.movieNm}}"
+                                    },
+                                    {
+                                        "name": "language",
+                                        "value": "ko-KR"
+                                    }
+                                ],
+                                "url": "https://api.themoviedb.org/3/search/movie",
+                                "data": "",
+                                "gzip": true,
+                                "method": "get",
+                                "headers": [],
+                                "timeout": "",
+                                "useMtls": false,
+                                "authPass": "",
+                                "authUser": "",
+                                "bodyType": "raw",
+                                "contentType": "application/json",
+                                "serializeUrl": false,
+                                "shareCookies": false,
+                                "parseResponse": true,
+                                "followRedirect": true,
+                                "useQuerystring": false,
+                                "followAllRedirects": false,
+                                "rejectUnauthorized": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 32,
+                                    "y": 461,
+                                    "name": "TMDB- 영화 검색 API"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "qs": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null,
+                                                null,
+                                                null
+                                            ]
+                                        },
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "GET"
+                                        },
+                                        "headers": {
+                                            "mode": "chose"
+                                        },
+                                        "bodyType": {
+                                            "label": "Raw"
+                                        },
+                                        "contentType": {
+                                            "label": "JSON (application/json)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "handleErrors",
+                                        "type": "boolean",
+                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useNewZLibDeCompress",
+                                        "type": "hidden"
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "url",
+                                        "type": "url",
+                                        "label": "URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "serializeUrl",
+                                        "type": "boolean",
+                                        "label": "Serialize URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "get",
+                                                "head",
+                                                "post",
+                                                "put",
+                                                "patch",
+                                                "delete",
+                                                "options"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Query String"
+                                    },
+                                    {
+                                        "name": "bodyType",
+                                        "type": "select",
+                                        "label": "Body type",
+                                        "validate": {
+                                            "enum": [
+                                                "raw",
+                                                "x_www_form_urlencoded",
+                                                "multipart_form_data"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "parseResponse",
+                                        "type": "boolean",
+                                        "label": "Parse response",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "authUser",
+                                        "type": "text",
+                                        "label": "User name"
+                                    },
+                                    {
+                                        "name": "authPass",
+                                        "type": "password",
+                                        "label": "Password"
+                                    },
+                                    {
+                                        "name": "timeout",
+                                        "type": "uinteger",
+                                        "label": "Timeout",
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    },
+                                    {
+                                        "name": "shareCookies",
+                                        "type": "boolean",
+                                        "label": "Share cookies with other HTTP modules",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "ca",
+                                        "type": "cert",
+                                        "label": "Self-signed certificate"
+                                    },
+                                    {
+                                        "name": "rejectUnauthorized",
+                                        "type": "boolean",
+                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "followRedirect",
+                                        "type": "boolean",
+                                        "label": "Follow redirect",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useQuerystring",
+                                        "type": "boolean",
+                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "gzip",
+                                        "type": "boolean",
+                                        "label": "Request compressed content",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useMtls",
+                                        "type": "boolean",
+                                        "label": "Use Mutual TLS",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "contentType",
+                                        "type": "select",
+                                        "label": "Content type",
+                                        "validate": {
+                                            "enum": [
+                                                "text/plain",
+                                                "application/json",
+                                                "application/xml",
+                                                "text/xml",
+                                                "text/html",
+                                                "custom"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "data",
+                                        "type": "buffer",
+                                        "label": "Request content"
+                                    },
+                                    {
+                                        "name": "followAllRedirects",
+                                        "type": "boolean",
+                                        "label": "Follow all redirect",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 49,
+                            "module": "builtin:BasicFeeder",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "array": "{{42.data.results}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 554,
+                                    "y": 461
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "array": {
+                                            "mode": "edit"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "mode": "edit",
+                                        "name": "array",
+                                        "spec": [],
+                                        "type": "array",
+                                        "label": "Array"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 50,
+                            "module": "http:ActionSendData",
+                            "version": 3,
+                            "parameters": {
+                                "handleErrors": true,
+                                "useNewZLibDeCompress": true
+                            },
+                            "mapper": {
+                                "ca": "",
+                                "qs": [
+                                    {
+                                        "name": "api_key",
+                                        "value": "381149bb1f0a6e0c3169ce9ad56d0186"
+                                    },
+                                    {
+                                        "name": "language",
+                                        "value": "ko-KR"
+                                    }
+                                ],
+                                "url": "https://api.themoviedb.org/3/movie/{{49.id}}",
+                                "data": "",
+                                "gzip": true,
+                                "method": "get",
+                                "headers": [],
+                                "timeout": "",
+                                "useMtls": false,
+                                "authPass": "",
+                                "authUser": "",
+                                "bodyType": "raw",
+                                "contentType": "application/json",
+                                "serializeUrl": false,
+                                "shareCookies": false,
+                                "parseResponse": true,
+                                "followRedirect": true,
+                                "useQuerystring": false,
+                                "followAllRedirects": false,
+                                "rejectUnauthorized": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 838,
+                                    "y": 463,
+                                    "name": "TMDB- 영화 상세정보 API"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "qs": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null,
+                                                null
+                                            ]
+                                        },
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "GET"
+                                        },
+                                        "headers": {
+                                            "mode": "chose"
+                                        },
+                                        "bodyType": {
+                                            "label": "Raw"
+                                        },
+                                        "contentType": {
+                                            "label": "JSON (application/json)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "handleErrors",
+                                        "type": "boolean",
+                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useNewZLibDeCompress",
+                                        "type": "hidden"
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "url",
+                                        "type": "url",
+                                        "label": "URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "serializeUrl",
+                                        "type": "boolean",
+                                        "label": "Serialize URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "get",
+                                                "head",
+                                                "post",
+                                                "put",
+                                                "patch",
+                                                "delete",
+                                                "options"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Query String"
+                                    },
+                                    {
+                                        "name": "bodyType",
+                                        "type": "select",
+                                        "label": "Body type",
+                                        "validate": {
+                                            "enum": [
+                                                "raw",
+                                                "x_www_form_urlencoded",
+                                                "multipart_form_data"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "parseResponse",
+                                        "type": "boolean",
+                                        "label": "Parse response",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "authUser",
+                                        "type": "text",
+                                        "label": "User name"
+                                    },
+                                    {
+                                        "name": "authPass",
+                                        "type": "password",
+                                        "label": "Password"
+                                    },
+                                    {
+                                        "name": "timeout",
+                                        "type": "uinteger",
+                                        "label": "Timeout",
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    },
+                                    {
+                                        "name": "shareCookies",
+                                        "type": "boolean",
+                                        "label": "Share cookies with other HTTP modules",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "ca",
+                                        "type": "cert",
+                                        "label": "Self-signed certificate"
+                                    },
+                                    {
+                                        "name": "rejectUnauthorized",
+                                        "type": "boolean",
+                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "followRedirect",
+                                        "type": "boolean",
+                                        "label": "Follow redirect",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useQuerystring",
+                                        "type": "boolean",
+                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "gzip",
+                                        "type": "boolean",
+                                        "label": "Request compressed content",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useMtls",
+                                        "type": "boolean",
+                                        "label": "Use Mutual TLS",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "contentType",
+                                        "type": "select",
+                                        "label": "Content type",
+                                        "validate": {
+                                            "enum": [
+                                                "text/plain",
+                                                "application/json",
+                                                "application/xml",
+                                                "text/xml",
+                                                "text/html",
+                                                "custom"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "data",
+                                        "type": "buffer",
+                                        "label": "Request content"
+                                    },
+                                    {
+                                        "name": "followAllRedirects",
+                                        "type": "boolean",
+                                        "label": "Follow all redirect",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 76,
+                            "module": "json:ParseJSON",
+                            "version": 1,
+                            "parameters": {
+                                "type": 389972
+                            },
+                            "mapper": {
+                                "json": "{{50.data}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1129,
+                                    "y": 463
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "type": {
+                                            "label": "My data structure"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "type",
+                                        "type": "udt",
+                                        "label": "Data structure"
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "json",
+                                        "type": "text",
+                                        "label": "JSON string",
+                                        "required": true
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "help": "",
+                                        "name": "tmdb",
+                                        "type": "text",
+                                        "label": null,
+                                        "default": null,
+                                        "required": false,
+                                        "multiline": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 43,
+                            "module": "builtin:BasicFeeder",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "array": "{{50.data}}{{76.production_countries[].name}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1408,
+                                    "y": 460
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "array": {
+                                            "mode": "edit"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "mode": "edit",
+                                        "name": "array",
+                                        "spec": [],
+                                        "type": "array",
+                                        "label": "Array"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 44,
+                            "module": "builtin:BasicAggregator",
+                            "version": 1,
+                            "parameters": {
+                                "feeder": 43,
+                                "target": "45.rows"
+                            },
+                            "mapper": {
+                                "values": [
+                                    "{{50.data.id}}",
+                                    "{{50.data.imdb_id}}",
+                                    "{{50.data.original_language}}",
+                                    "{{50.data.original_title}}",
+                                    "{{50.data.title}}",
+                                    "{{50.data.release_date}}",
+                                    "{{50.data.runtime}}",
+                                    "{{50.data.overview}}",
+                                    "{{76.production_countries[].name}}",
+                                    "{{76.production_companies[].name}}",
+                                    "{{50.data.popularity}}",
+                                    "{{50.data.vote_average}}",
+                                    "{{50.data.vote_count}}",
+                                    "https://image.tmdb.org/t/p/w500{{50.data.poster_path}}"
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1691,
+                                    "y": 459
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Iterator [43]"
+                                        },
+                                        "target": {
+                                            "label": "Rows"
+                                        }
+                                    },
+                                    "expect": {
+                                        "__IMTTARGET__": {
+                                            "nested": {
+                                                "values": {
+                                                    "mode": "chose",
+                                                    "items": [
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "values",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "text",
+                                            "label": "Column"
+                                        },
+                                        "type": "array",
+                                        "label": "Values"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 58,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 1984,
+                                    "y": 461
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 61,
+                                            "module": "gemini-ai:createACompletionGeminiPro",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 10437435
+                                            },
+                                            "mapper": {
+                                                "model": "gemini-2.5-flash",
+                                                "contents": [
+                                                    {
+                                                        "role": "user",
+                                                        "parts": [
+                                                            {
+                                                                "text": "You are a film classification assistant for a movie streaming platform.\r\n\r\nYour task is to read a movie plot (overview) and classify it into **exactly one** keyword from each of the following three categories:\r\n\r\n1. Tone  \r\n2. Era/Setting  \r\n3. Theme\r\n\r\nReturn **only one keyword per category**, in the exact order listed above.\r\n\r\nYou must output the selected keywords as **a single line**, separated only by commas, with **no additional text** (e.g., explanations, labels, quotation marks, brackets, line breaks, or bullet points).\r\n\r\n---\r\n\r\n🎯 Tone – choose one from:  \r\n[희망적인, 마음이 따뜻해지는, 감정적인, 영감을 주는, 가볍고 유쾌한, 유머러스한, 긴장감 있는, 어두운, 우울한, 폭력적인, 냉혹한, 로맨틱한, 애상적인, 씁쓸한, 서스펜스 있는]\r\n\r\n🎯 Era/Setting – choose one from:  \r\n[현대, 역사적, 중세, 미래, 종말 이후, 디스토피아, 시골, 도시, 군대, 학교, 판타지 세계, 우주]\r\n\r\n🎯 Theme – choose one from:  \r\n[가족, 우정, 사랑/로맨스, 성장, 생존, 복수, 구원, 배신, 전쟁, 정체성, 정의, 범죄, 권력, 정치, 계급 투쟁, 슬픔, 정신 건강, 기술]\r\n\r\n---\r\n\r\n📌 Output rules (must follow strictly):  \r\n- Output only **3 Korean keywords**, separated by commas  \r\n- **No explanation, no symbols, no quotes, no newlines**  \r\n- If no suitable keyword can be determined, choose the **closest** match  \r\n- If multiple keywords seem valid, choose **only one per category**  \r\n- If the overview is **missing, empty, or unavailable**, return **an a single space('\" \"') only**, with absolutely **no explanation or fallback text**\r\n\r\nNow process the following movie overview:  \r\n{{76.overview}}",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "generationConfig": {
+                                                    "thinkingConfig": {}
+                                                },
+                                                "system_instruction": {}
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2225,
+                                                    "y": 638
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "model": {
+                                                            "mode": "chose",
+                                                            "label": "Gemini 2.5 Flash"
+                                                        },
+                                                        "contents": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "role": {
+                                                                        "mode": "chose",
+                                                                        "label": "User"
+                                                                    },
+                                                                    "parts": {
+                                                                        "mode": "chose",
+                                                                        "items": [
+                                                                            {
+                                                                                "type": {
+                                                                                    "mode": "chose",
+                                                                                    "label": "Text"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        "safetySettings": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "generationConfig": {
+                                                            "nested": {
+                                                                "stopSequences": {
+                                                                    "mode": "chose"
+                                                                },
+                                                                "thinkingConfig": {
+                                                                    "nested": {
+                                                                        "include_thoughts": {
+                                                                            "mode": "chose"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "responseMimeType": {
+                                                                    "mode": "chose",
+                                                                    "label": "Empty"
+                                                                },
+                                                                "responseModalities": {
+                                                                    "mode": "chose"
+                                                                }
+                                                            }
+                                                        },
+                                                        "system_instruction": {
+                                                            "nested": {
+                                                                "parts": {
+                                                                    "mode": "chose"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "gemini-ai-q9zyjp"
+                                                            },
+                                                            "label": "My Gemini AI connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:gemini-ai-q9zyjp",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "model",
+                                                        "type": "select",
+                                                        "label": "AI Model",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "contents",
+                                                        "spec": [
+                                                            {
+                                                                "name": "role",
+                                                                "type": "select",
+                                                                "label": "Role",
+                                                                "options": [
+                                                                    {
+                                                                        "label": "User",
+                                                                        "value": "user"
+                                                                    },
+                                                                    {
+                                                                        "label": "Model",
+                                                                        "value": "model"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "parts",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "select",
+                                                                        "label": "Message Type",
+                                                                        "options": [
+                                                                            {
+                                                                                "label": "Text",
+                                                                                "value": "text",
+                                                                                "nested": [
+                                                                                    {
+                                                                                        "name": "text",
+                                                                                        "type": "text",
+                                                                                        "label": "Text",
+                                                                                        "required": false
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "label": "File",
+                                                                                "value": "file",
+                                                                                "nested": [
+                                                                                    {
+                                                                                        "name": "file_data",
+                                                                                        "spec": [
+                                                                                            {
+                                                                                                "name": "mime_type",
+                                                                                                "type": "text",
+                                                                                                "label": "Mime Type",
+                                                                                                "required": false
+                                                                                            },
+                                                                                            {
+                                                                                                "help": "You get this from the 'Upload a File' module.",
+                                                                                                "name": "file_uri",
+                                                                                                "type": "text",
+                                                                                                "label": "File URI",
+                                                                                                "required": false
+                                                                                            }
+                                                                                        ],
+                                                                                        "type": "collection",
+                                                                                        "label": "File Data",
+                                                                                        "required": false
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "type": "array",
+                                                                "label": "Parts"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Messages",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "system_instruction",
+                                                        "spec": [
+                                                            {
+                                                                "name": "parts",
+                                                                "spec": {
+                                                                    "name": "value",
+                                                                    "spec": [
+                                                                        {
+                                                                            "name": "text",
+                                                                            "type": "text",
+                                                                            "label": "Value"
+                                                                        }
+                                                                    ],
+                                                                    "type": "collection",
+                                                                    "label": "Prompt"
+                                                                },
+                                                                "type": "array",
+                                                                "label": "Prompts"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "System Instructions"
+                                                    },
+                                                    {
+                                                        "name": "safetySettings",
+                                                        "spec": [
+                                                            {
+                                                                "name": "category",
+                                                                "type": "select",
+                                                                "label": "Category",
+                                                                "options": [
+                                                                    {
+                                                                        "label": "Harassment content",
+                                                                        "value": "HARM_CATEGORY_HARASSMENT"
+                                                                    },
+                                                                    {
+                                                                        "label": "Hate speech and content",
+                                                                        "value": "HARM_CATEGORY_HATE_SPEECH"
+                                                                    },
+                                                                    {
+                                                                        "label": "Sexually explicit content.",
+                                                                        "value": "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+                                                                    },
+                                                                    {
+                                                                        "label": "Dangerous content:",
+                                                                        "value": "HARM_CATEGORY_DANGEROUS_CONTENT"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "threshold",
+                                                                "type": "select",
+                                                                "label": "Threshold",
+                                                                "options": [
+                                                                    {
+                                                                        "label": "Block low and above.",
+                                                                        "value": "BLOCK_LOW_AND_ABOVE"
+                                                                    },
+                                                                    {
+                                                                        "label": "Block medium and above.",
+                                                                        "value": "BLOCK_MEDIUM_AND_ABOVE"
+                                                                    },
+                                                                    {
+                                                                        "label": "Block only high.",
+                                                                        "value": "BLOCK_ONLY_HIGH"
+                                                                    },
+                                                                    {
+                                                                        "label": "Block none.",
+                                                                        "value": "BLOCK_NONE"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Safety Settings"
+                                                    },
+                                                    {
+                                                        "name": "generationConfig",
+                                                        "spec": [
+                                                            {
+                                                                "name": "stopSequences",
+                                                                "spec": {
+                                                                    "name": "value",
+                                                                    "type": "text",
+                                                                    "label": "Stop Sequence"
+                                                                },
+                                                                "type": "array",
+                                                                "label": "Stop Sequences"
+                                                            },
+                                                            {
+                                                                "name": "responseModalities",
+                                                                "type": "select",
+                                                                "label": "Response Modalities",
+                                                                "multiple": true,
+                                                                "validate": {
+                                                                    "enum": [
+                                                                        "text",
+                                                                        "image"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "maxOutputTokens",
+                                                                "type": "number",
+                                                                "label": "Max Output Tokens"
+                                                            },
+                                                            {
+                                                                "name": "temperature",
+                                                                "type": "number",
+                                                                "label": "Temperature",
+                                                                "validate": {
+                                                                    "max": 1,
+                                                                    "min": 0
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "topP",
+                                                                "type": "number",
+                                                                "label": "Top P",
+                                                                "validate": {
+                                                                    "max": 1,
+                                                                    "min": 0
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "topK",
+                                                                "type": "number",
+                                                                "label": "Top K"
+                                                            },
+                                                            {
+                                                                "name": "thinkingConfig",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "thinkingBudget",
+                                                                        "type": "number",
+                                                                        "label": "Thinking Budget"
+                                                                    },
+                                                                    {
+                                                                        "name": "include_thoughts",
+                                                                        "type": "boolean",
+                                                                        "label": "Include Thoughts"
+                                                                    }
+                                                                ],
+                                                                "type": "collection",
+                                                                "label": "Thinking Config"
+                                                            },
+                                                            {
+                                                                "name": "responseMimeType",
+                                                                "type": "select",
+                                                                "label": "Response Mime Type"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Generation configurations"
+                                                    },
+                                                    {
+                                                        "name": "tools",
+                                                        "type": "any",
+                                                        "label": "Tools"
+                                                    },
+                                                    {
+                                                        "name": "tool_config",
+                                                        "type": "any",
+                                                        "label": "Tool Config"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 69,
+                                            "module": "http:ActionSendDataAPIKeyAuth",
+                                            "version": 3,
+                                            "parameters": {
+                                                "auth": 108907,
+                                                "handleErrors": false,
+                                                "useNewZLibDeCompress": true
+                                            },
+                                            "mapper": {
+                                                "ca": "",
+                                                "qs": [
+                                                    {
+                                                        "name": "query",
+                                                        "value": "{{7.movieNm}}"
+                                                    },
+                                                    {
+                                                        "name": "language",
+                                                        "value": "ko_KR"
+                                                    }
+                                                ],
+                                                "url": "https://api.themoviedb.org/3/movie/{{49.id}}/keywords?api_key=987d8462a8999957a608f8e9ac6c8db1",
+                                                "gzip": true,
+                                                "method": "get",
+                                                "headers": [],
+                                                "timeout": "",
+                                                "useMtls": false,
+                                                "bodyType": "",
+                                                "serializeUrl": false,
+                                                "shareCookies": false,
+                                                "parseResponse": true,
+                                                "followRedirect": true,
+                                                "useQuerystring": false,
+                                                "followAllRedirects": false,
+                                                "rejectUnauthorized": true
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2512,
+                                                    "y": 639
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "qs": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                null,
+                                                                null
+                                                            ]
+                                                        },
+                                                        "method": {
+                                                            "mode": "chose",
+                                                            "label": "GET"
+                                                        },
+                                                        "headers": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "bodyType": {
+                                                            "label": "Empty"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "auth": {
+                                                            "label": "My API Key Auth key"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "auth",
+                                                        "type": "keychain:apikeyauth",
+                                                        "label": "Credentials",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "handleErrors",
+                                                        "type": "boolean",
+                                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "useNewZLibDeCompress",
+                                                        "type": "hidden"
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "url",
+                                                        "type": "url",
+                                                        "label": "URL",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "serializeUrl",
+                                                        "type": "boolean",
+                                                        "label": "Serialize URL",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "method",
+                                                        "type": "select",
+                                                        "label": "Method",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "get",
+                                                                "head",
+                                                                "post",
+                                                                "put",
+                                                                "patch",
+                                                                "delete",
+                                                                "options"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "headers",
+                                                        "spec": [
+                                                            {
+                                                                "name": "name",
+                                                                "type": "text",
+                                                                "label": "Name",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "text",
+                                                                "label": "Value"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Headers"
+                                                    },
+                                                    {
+                                                        "name": "qs",
+                                                        "spec": [
+                                                            {
+                                                                "name": "name",
+                                                                "type": "text",
+                                                                "label": "Name",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "text",
+                                                                "label": "Value"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Query String"
+                                                    },
+                                                    {
+                                                        "name": "bodyType",
+                                                        "type": "select",
+                                                        "label": "Body type",
+                                                        "validate": {
+                                                            "enum": [
+                                                                "raw",
+                                                                "x_www_form_urlencoded",
+                                                                "multipart_form_data"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "parseResponse",
+                                                        "type": "boolean",
+                                                        "label": "Parse response",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "timeout",
+                                                        "type": "uinteger",
+                                                        "label": "Timeout",
+                                                        "validate": {
+                                                            "max": 300,
+                                                            "min": 1
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "shareCookies",
+                                                        "type": "boolean",
+                                                        "label": "Share cookies with other HTTP modules",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "ca",
+                                                        "type": "cert",
+                                                        "label": "Self-signed certificate"
+                                                    },
+                                                    {
+                                                        "name": "rejectUnauthorized",
+                                                        "type": "boolean",
+                                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "followRedirect",
+                                                        "type": "boolean",
+                                                        "label": "Follow redirect",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "useQuerystring",
+                                                        "type": "boolean",
+                                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "gzip",
+                                                        "type": "boolean",
+                                                        "label": "Request compressed content",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "useMtls",
+                                                        "type": "boolean",
+                                                        "label": "Use Mutual TLS",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "followAllRedirects",
+                                                        "type": "boolean",
+                                                        "label": "Follow all redirect",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 70,
+                                            "module": "gemini-ai:createACompletionGeminiPro",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 10437435
+                                            },
+                                            "mapper": {
+                                                "model": "gemini-2.5-flash",
+                                                "contents": [
+                                                    {
+                                                        "role": "user",
+                                                        "parts": [
+                                                            {
+                                                                "text": "You are a keyword extraction assistant working with structured JSON data from TMDB (The Movie Database).\n\nYour task is to process a JSON array of objects. Each object may have two fields: \"id\" and \"name\".\n\nFrom the given input:\n\nExtract all the values of the \"name\" fields.\n\nTranslate each extracted \"name\" value from English into Korean using natural, concise translations (for example, \"zombie\" → \"좀비\", \"based on webcomic or webtoon\" → \"웹툰 기반\").\n\nOutput the translated Korean keywords as a single line of comma-separated values.\n\nDo not include brackets, quotes, or any explanation.\n\nIf there are no \"name\" values, output an empty string only — with no error messages or comments.\n\n💡 Example input:\n[\n{\"id\":12377,\"name\":\"zombie\"},\n{\"id\":288474,\"name\":\"based on webcomic or webtoon\"}\n]\n\n✅ Expected output:\n좀비,웹툰 기반\n\n⚠️ Important output rules:\n\nOutput only the comma-separated Korean keywords, with no extra text.\n\nIf the JSON is not an array, or contains no \"name\" fields, or the array is empty, return an empty string (\"\") — do not explain or comment.\n\nNow process the following JSON input:\n{{69.data}}",
+                                                                "type": "text"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "generationConfig": {
+                                                    "thinkingConfig": {}
+                                                },
+                                                "system_instruction": {}
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2855,
+                                                    "y": 634
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "model": {
+                                                            "mode": "chose",
+                                                            "label": "Gemini 2.5 Flash"
+                                                        },
+                                                        "contents": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                {
+                                                                    "role": {
+                                                                        "mode": "chose",
+                                                                        "label": "User"
+                                                                    },
+                                                                    "parts": {
+                                                                        "mode": "chose",
+                                                                        "items": [
+                                                                            {
+                                                                                "type": {
+                                                                                    "mode": "chose",
+                                                                                    "label": "Text"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        "safetySettings": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "generationConfig": {
+                                                            "nested": {
+                                                                "stopSequences": {
+                                                                    "mode": "chose"
+                                                                },
+                                                                "thinkingConfig": {
+                                                                    "nested": {
+                                                                        "include_thoughts": {
+                                                                            "mode": "chose"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "responseMimeType": {
+                                                                    "mode": "chose",
+                                                                    "label": "Empty"
+                                                                },
+                                                                "responseModalities": {
+                                                                    "mode": "chose"
+                                                                }
+                                                            }
+                                                        },
+                                                        "system_instruction": {
+                                                            "nested": {
+                                                                "parts": {
+                                                                    "mode": "chose"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "gemini-ai-q9zyjp"
+                                                            },
+                                                            "label": "My Gemini AI connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:gemini-ai-q9zyjp",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "model",
+                                                        "type": "select",
+                                                        "label": "AI Model",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "contents",
+                                                        "spec": [
+                                                            {
+                                                                "name": "role",
+                                                                "type": "select",
+                                                                "label": "Role",
+                                                                "options": [
+                                                                    {
+                                                                        "label": "User",
+                                                                        "value": "user"
+                                                                    },
+                                                                    {
+                                                                        "label": "Model",
+                                                                        "value": "model"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "parts",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "select",
+                                                                        "label": "Message Type",
+                                                                        "options": [
+                                                                            {
+                                                                                "label": "Text",
+                                                                                "value": "text",
+                                                                                "nested": [
+                                                                                    {
+                                                                                        "name": "text",
+                                                                                        "type": "text",
+                                                                                        "label": "Text",
+                                                                                        "required": false
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "label": "File",
+                                                                                "value": "file",
+                                                                                "nested": [
+                                                                                    {
+                                                                                        "name": "file_data",
+                                                                                        "spec": [
+                                                                                            {
+                                                                                                "name": "mime_type",
+                                                                                                "type": "text",
+                                                                                                "label": "Mime Type",
+                                                                                                "required": false
+                                                                                            },
+                                                                                            {
+                                                                                                "help": "You get this from the 'Upload a File' module.",
+                                                                                                "name": "file_uri",
+                                                                                                "type": "text",
+                                                                                                "label": "File URI",
+                                                                                                "required": false
+                                                                                            }
+                                                                                        ],
+                                                                                        "type": "collection",
+                                                                                        "label": "File Data",
+                                                                                        "required": false
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "type": "array",
+                                                                "label": "Parts"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Messages",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "system_instruction",
+                                                        "spec": [
+                                                            {
+                                                                "name": "parts",
+                                                                "spec": {
+                                                                    "name": "value",
+                                                                    "spec": [
+                                                                        {
+                                                                            "name": "text",
+                                                                            "type": "text",
+                                                                            "label": "Value"
+                                                                        }
+                                                                    ],
+                                                                    "type": "collection",
+                                                                    "label": "Prompt"
+                                                                },
+                                                                "type": "array",
+                                                                "label": "Prompts"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "System Instructions"
+                                                    },
+                                                    {
+                                                        "name": "safetySettings",
+                                                        "spec": [
+                                                            {
+                                                                "name": "category",
+                                                                "type": "select",
+                                                                "label": "Category",
+                                                                "options": [
+                                                                    {
+                                                                        "label": "Harassment content",
+                                                                        "value": "HARM_CATEGORY_HARASSMENT"
+                                                                    },
+                                                                    {
+                                                                        "label": "Hate speech and content",
+                                                                        "value": "HARM_CATEGORY_HATE_SPEECH"
+                                                                    },
+                                                                    {
+                                                                        "label": "Sexually explicit content.",
+                                                                        "value": "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+                                                                    },
+                                                                    {
+                                                                        "label": "Dangerous content:",
+                                                                        "value": "HARM_CATEGORY_DANGEROUS_CONTENT"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "threshold",
+                                                                "type": "select",
+                                                                "label": "Threshold",
+                                                                "options": [
+                                                                    {
+                                                                        "label": "Block low and above.",
+                                                                        "value": "BLOCK_LOW_AND_ABOVE"
+                                                                    },
+                                                                    {
+                                                                        "label": "Block medium and above.",
+                                                                        "value": "BLOCK_MEDIUM_AND_ABOVE"
+                                                                    },
+                                                                    {
+                                                                        "label": "Block only high.",
+                                                                        "value": "BLOCK_ONLY_HIGH"
+                                                                    },
+                                                                    {
+                                                                        "label": "Block none.",
+                                                                        "value": "BLOCK_NONE"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Safety Settings"
+                                                    },
+                                                    {
+                                                        "name": "generationConfig",
+                                                        "spec": [
+                                                            {
+                                                                "name": "stopSequences",
+                                                                "spec": {
+                                                                    "name": "value",
+                                                                    "type": "text",
+                                                                    "label": "Stop Sequence"
+                                                                },
+                                                                "type": "array",
+                                                                "label": "Stop Sequences"
+                                                            },
+                                                            {
+                                                                "name": "responseModalities",
+                                                                "type": "select",
+                                                                "label": "Response Modalities",
+                                                                "multiple": true,
+                                                                "validate": {
+                                                                    "enum": [
+                                                                        "text",
+                                                                        "image"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "maxOutputTokens",
+                                                                "type": "number",
+                                                                "label": "Max Output Tokens"
+                                                            },
+                                                            {
+                                                                "name": "temperature",
+                                                                "type": "number",
+                                                                "label": "Temperature",
+                                                                "validate": {
+                                                                    "max": 1,
+                                                                    "min": 0
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "topP",
+                                                                "type": "number",
+                                                                "label": "Top P",
+                                                                "validate": {
+                                                                    "max": 1,
+                                                                    "min": 0
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "topK",
+                                                                "type": "number",
+                                                                "label": "Top K"
+                                                            },
+                                                            {
+                                                                "name": "thinkingConfig",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "thinkingBudget",
+                                                                        "type": "number",
+                                                                        "label": "Thinking Budget"
+                                                                    },
+                                                                    {
+                                                                        "name": "include_thoughts",
+                                                                        "type": "boolean",
+                                                                        "label": "Include Thoughts"
+                                                                    }
+                                                                ],
+                                                                "type": "collection",
+                                                                "label": "Thinking Config"
+                                                            },
+                                                            {
+                                                                "name": "responseMimeType",
+                                                                "type": "select",
+                                                                "label": "Response Mime Type"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Generation configurations"
+                                                    },
+                                                    {
+                                                        "name": "tools",
+                                                        "type": "any",
+                                                        "label": "Tools"
+                                                    },
+                                                    {
+                                                        "name": "tool_config",
+                                                        "type": "any",
+                                                        "label": "Tool Config"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 73,
+                                            "module": "builtin:BasicFeeder",
+                                            "version": 1,
+                                            "parameters": {},
+                                            "mapper": {
+                                                "array": "{{70.result}}{{61.result}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 3203,
+                                                    "y": 632
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "array": {
+                                                            "mode": "edit"
+                                                        }
+                                                    }
+                                                },
+                                                "expect": [
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "array",
+                                                        "spec": [],
+                                                        "type": "array",
+                                                        "label": "Array"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 72,
+                                            "module": "builtin:BasicAggregator",
+                                            "version": 1,
+                                            "parameters": {
+                                                "feeder": 73,
+                                                "target": "62.rows"
+                                            },
+                                            "mapper": {
+                                                "values": [
+                                                    "{{76.title}}",
+                                                    "{{70.result}}",
+                                                    "{{61.result}}"
+                                                ]
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 3498,
+                                                    "y": 633
+                                                },
+                                                "restore": {
+                                                    "extra": {
+                                                        "feeder": {
+                                                            "label": "Iterator [73]"
+                                                        },
+                                                        "target": {
+                                                            "label": "Rows"
+                                                        }
+                                                    },
+                                                    "expect": {
+                                                        "__IMTTARGET__": {
+                                                            "nested": {
+                                                                "values": {
+                                                                    "mode": "chose",
+                                                                    "items": [
+                                                                        null,
+                                                                        null,
+                                                                        null
+                                                                    ]
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "expect": [
+                                                    {
+                                                        "name": "values",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "text",
+                                                            "label": "Column"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Values"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 62,
+                                            "module": "google-sheets:addMultipleRows",
+                                            "version": 2,
+                                            "parameters": {
+                                                "__IMTCONN__": 10722748
+                                            },
+                                            "mapper": {
+                                                "rows": "{{72.array}}",
+                                                "sheetId": "키워드",
+                                                "spreadsheetId": "1WIvtZP3p75PrUiXku3_cxfsiOWZIyB6Q4EykX0uevt8",
+                                                "tableFirstRow": "A1:Z1",
+                                                "insertDataOption": "INSERT_ROWS",
+                                                "valueInputOption": "USER_ENTERED",
+                                                "insertUnformatted": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 3794,
+                                                    "y": 637
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "rows": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "sheetId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "tableFirstRow": {
+                                                            "label": "A-Z"
+                                                        },
+                                                        "insertDataOption": {
+                                                            "mode": "chose",
+                                                            "label": "Insert rows"
+                                                        },
+                                                        "valueInputOption": {
+                                                            "mode": "chose",
+                                                            "label": "User entered"
+                                                        },
+                                                        "insertUnformatted": {
+                                                            "mode": "chose"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "google"
+                                                            },
+                                                            "label": "My Google connection (sunicflex@gmail.com)"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:google",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "spreadsheetId",
+                                                        "type": "text",
+                                                        "label": "Spreadsheet ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "insertUnformatted",
+                                                        "type": "boolean",
+                                                        "label": "Unformatted",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "valueInputOption",
+                                                        "type": "select",
+                                                        "label": "Value input option"
+                                                    },
+                                                    {
+                                                        "name": "insertDataOption",
+                                                        "type": "select",
+                                                        "label": "Insert data option"
+                                                    },
+                                                    {
+                                                        "type": "hidden"
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "sheetId",
+                                                        "type": "select",
+                                                        "label": "Sheet Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "tableFirstRow",
+                                                        "type": "select",
+                                                        "label": "Column range",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "A1:Z1",
+                                                                "A1:BZ1",
+                                                                "A1:CZ1",
+                                                                "A1:DZ1",
+                                                                "A1:MZ1",
+                                                                "A1:ZZ1"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "rows",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "spec": [
+                                                                {
+                                                                    "name": "values",
+                                                                    "spec": {
+                                                                        "type": "text",
+                                                                        "label": "Column"
+                                                                    },
+                                                                    "type": "array",
+                                                                    "label": "Values",
+                                                                    "labels": {
+                                                                        "add": "Add value"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "collection",
+                                                            "label": "Row"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Rows"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 45,
+                                            "module": "google-sheets:addMultipleRows",
+                                            "version": 2,
+                                            "parameters": {
+                                                "__IMTCONN__": 10722748
+                                            },
+                                            "mapper": {
+                                                "rows": "{{44.array}}",
+                                                "sheetId": "TMDB",
+                                                "spreadsheetId": "1WIvtZP3p75PrUiXku3_cxfsiOWZIyB6Q4EykX0uevt8",
+                                                "tableFirstRow": "A1:Z1",
+                                                "insertDataOption": "INSERT_ROWS",
+                                                "valueInputOption": "USER_ENTERED",
+                                                "insertUnformatted": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2208,
+                                                    "y": 289
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "rows": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "sheetId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "tableFirstRow": {
+                                                            "label": "A-Z"
+                                                        },
+                                                        "insertDataOption": {
+                                                            "mode": "chose",
+                                                            "label": "Insert rows"
+                                                        },
+                                                        "valueInputOption": {
+                                                            "mode": "chose",
+                                                            "label": "User entered"
+                                                        },
+                                                        "insertUnformatted": {
+                                                            "mode": "chose"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "google"
+                                                            },
+                                                            "label": "My Google connection (sunicflex@gmail.com)"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:google",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "spreadsheetId",
+                                                        "type": "text",
+                                                        "label": "Spreadsheet ID",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "insertUnformatted",
+                                                        "type": "boolean",
+                                                        "label": "Unformatted",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "valueInputOption",
+                                                        "type": "select",
+                                                        "label": "Value input option"
+                                                    },
+                                                    {
+                                                        "name": "insertDataOption",
+                                                        "type": "select",
+                                                        "label": "Insert data option"
+                                                    },
+                                                    {
+                                                        "type": "hidden"
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "sheetId",
+                                                        "type": "select",
+                                                        "label": "Sheet Name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "tableFirstRow",
+                                                        "type": "select",
+                                                        "label": "Column range",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "A1:Z1",
+                                                                "A1:BZ1",
+                                                                "A1:CZ1",
+                                                                "A1:DZ1",
+                                                                "A1:MZ1",
+                                                                "A1:ZZ1"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "rows",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "spec": [
+                                                                {
+                                                                    "name": "values",
+                                                                    "spec": {
+                                                                        "type": "text",
+                                                                        "label": "Column"
+                                                                    },
+                                                                    "type": "array",
+                                                                    "label": "Values",
+                                                                    "labels": {
+                                                                        "add": "Add value"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "collection",
+                                                            "label": "Row"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Rows"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 25,
+                            "module": "http:ActionSendData",
+                            "version": 3,
+                            "parameters": {
+                                "handleErrors": true,
+                                "useNewZLibDeCompress": true
+                            },
+                            "mapper": {
+                                "ca": "",
+                                "qs": [
+                                    {
+                                        "name": "key",
+                                        "value": "06c2f1597ac92d9d9e259736e5c9a827"
+                                    },
+                                    {
+                                        "name": "movieNm",
+                                        "value": "{{7.movieNm}}"
+                                    }
+                                ],
+                                "url": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json",
+                                "gzip": true,
+                                "method": "get",
+                                "headers": [],
+                                "timeout": "",
+                                "useMtls": false,
+                                "authPass": "",
+                                "authUser": "",
+                                "bodyType": "",
+                                "serializeUrl": false,
+                                "shareCookies": false,
+                                "parseResponse": true,
+                                "followRedirect": true,
+                                "useQuerystring": false,
+                                "followAllRedirects": false,
+                                "rejectUnauthorized": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 94,
+                                    "y": 61,
+                                    "name": "영화진흥위원회-영화목록 API"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "qs": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null,
+                                                null
+                                            ]
+                                        },
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "GET"
+                                        },
+                                        "headers": {
+                                            "mode": "chose"
+                                        },
+                                        "bodyType": {
+                                            "label": "Empty"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "handleErrors",
+                                        "type": "boolean",
+                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useNewZLibDeCompress",
+                                        "type": "hidden"
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "url",
+                                        "type": "url",
+                                        "label": "URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "serializeUrl",
+                                        "type": "boolean",
+                                        "label": "Serialize URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "get",
+                                                "head",
+                                                "post",
+                                                "put",
+                                                "patch",
+                                                "delete",
+                                                "options"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Query String"
+                                    },
+                                    {
+                                        "name": "bodyType",
+                                        "type": "select",
+                                        "label": "Body type",
+                                        "validate": {
+                                            "enum": [
+                                                "raw",
+                                                "x_www_form_urlencoded",
+                                                "multipart_form_data"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "parseResponse",
+                                        "type": "boolean",
+                                        "label": "Parse response",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "authUser",
+                                        "type": "text",
+                                        "label": "User name"
+                                    },
+                                    {
+                                        "name": "authPass",
+                                        "type": "password",
+                                        "label": "Password"
+                                    },
+                                    {
+                                        "name": "timeout",
+                                        "type": "uinteger",
+                                        "label": "Timeout",
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    },
+                                    {
+                                        "name": "shareCookies",
+                                        "type": "boolean",
+                                        "label": "Share cookies with other HTTP modules",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "ca",
+                                        "type": "cert",
+                                        "label": "Self-signed certificate"
+                                    },
+                                    {
+                                        "name": "rejectUnauthorized",
+                                        "type": "boolean",
+                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "followRedirect",
+                                        "type": "boolean",
+                                        "label": "Follow redirect",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useQuerystring",
+                                        "type": "boolean",
+                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "gzip",
+                                        "type": "boolean",
+                                        "label": "Request compressed content",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useMtls",
+                                        "type": "boolean",
+                                        "label": "Use Mutual TLS",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "followAllRedirects",
+                                        "type": "boolean",
+                                        "label": "Follow all redirect",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 26,
+                            "module": "builtin:BasicFeeder",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "array": "{{25.data.movieListResult.movieList}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 562,
+                                    "y": 166
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "array": {
+                                            "mode": "edit"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "mode": "edit",
+                                        "name": "array",
+                                        "spec": [],
+                                        "type": "array",
+                                        "label": "Array"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 29,
+                            "module": "builtin:BasicAggregator",
+                            "version": 1,
+                            "parameters": {
+                                "feeder": 26,
+                                "target": "30.rows"
+                            },
+                            "mapper": {
+                                "values": [
+                                    "{{26.movieCd}}",
+                                    "{{26.movieNm}}",
+                                    "{{26.movieNmEn}}",
+                                    "{{26.prdtYear}}",
+                                    "{{26.openDt}}",
+                                    "{{26.typeNm}}",
+                                    "{{26.nationAlt}}",
+                                    "{{26.genreAlt}}",
+                                    "{{26.directors[].peopleNm}}",
+                                    "{{26.companys[].companyNm}}"
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 845,
+                                    "y": 169
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Iterator [26]"
+                                        },
+                                        "target": {
+                                            "label": "Rows"
+                                        }
+                                    },
+                                    "expect": {
+                                        "__IMTTARGET__": {
+                                            "nested": {
+                                                "values": {
+                                                    "mode": "chose",
+                                                    "items": [
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "values",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "text",
+                                            "label": "Column"
+                                        },
+                                        "type": "array",
+                                        "label": "Values"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 30,
+                            "module": "google-sheets:addMultipleRows",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 10722748
+                            },
+                            "mapper": {
+                                "rows": "{{29.array}}",
+                                "sheetId": "영화진흥위원회",
+                                "spreadsheetId": "1WIvtZP3p75PrUiXku3_cxfsiOWZIyB6Q4EykX0uevt8",
+                                "tableFirstRow": "A1:Z1",
+                                "insertDataOption": "INSERT_ROWS",
+                                "valueInputOption": "USER_ENTERED",
+                                "insertUnformatted": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1138,
+                                    "y": 163
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "rows": {
+                                            "mode": "edit"
+                                        },
+                                        "sheetId": {
+                                            "mode": "edit"
+                                        },
+                                        "tableFirstRow": {
+                                            "label": "A-Z"
+                                        },
+                                        "insertDataOption": {
+                                            "mode": "chose",
+                                            "label": "Insert rows"
+                                        },
+                                        "valueInputOption": {
+                                            "mode": "chose",
+                                            "label": "User entered"
+                                        },
+                                        "insertUnformatted": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "google"
+                                            },
+                                            "label": "My Google connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:google",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "spreadsheetId",
+                                        "type": "text",
+                                        "label": "Spreadsheet ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "insertUnformatted",
+                                        "type": "boolean",
+                                        "label": "Unformatted",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "valueInputOption",
+                                        "type": "select",
+                                        "label": "Value input option"
+                                    },
+                                    {
+                                        "name": "insertDataOption",
+                                        "type": "select",
+                                        "label": "Insert data option"
+                                    },
+                                    {
+                                        "type": "hidden"
+                                    },
+                                    {
+                                        "mode": "edit",
+                                        "name": "sheetId",
+                                        "type": "select",
+                                        "label": "Sheet Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "tableFirstRow",
+                                        "type": "select",
+                                        "label": "Column range",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "A1:Z1",
+                                                "A1:BZ1",
+                                                "A1:CZ1",
+                                                "A1:DZ1",
+                                                "A1:MZ1",
+                                                "A1:ZZ1"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "mode": "edit",
+                                        "name": "rows",
+                                        "spec": {
+                                            "name": "value",
+                                            "spec": [
+                                                {
+                                                    "name": "values",
+                                                    "spec": {
+                                                        "type": "text",
+                                                        "label": "Column"
+                                                    },
+                                                    "type": "array",
+                                                    "label": "Values",
+                                                    "labels": {
+                                                        "add": "Add value"
+                                                    }
+                                                }
+                                            ],
+                                            "type": "collection",
+                                            "label": "Row"
+                                        },
+                                        "type": "array",
+                                        "label": "Rows"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 77,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "targetDateInput",
+                                "scope": "roundtrip",
+                                "value": "20250809"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": -650,
+                                    "y": 795,
+                                    "name": "조회 날짜 입력(직접 날짜 YYYYMMDD 입력 또는 빈칸)"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "targetDateInput",
+                                        "type": "any",
+                                        "label": "targetDateInput"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 78,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "targetDateFinal",
+                                "scope": "roundtrip",
+                                "value": "{{ifempty(77.targetDateInput; formatDate(addDays(now; -1); \"YYYYMMDD\"); 77.targetDateInput)}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": -311,
+                                    "y": 799
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "targetDateFinal",
+                                        "type": "any",
+                                        "label": "targetDateFinal"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 80,
+                            "module": "http:ActionSendData",
+                            "version": 3,
+                            "parameters": {
+                                "handleErrors": true,
+                                "useNewZLibDeCompress": true
+                            },
+                            "mapper": {
+                                "ca": "",
+                                "qs": [
+                                    {
+                                        "name": "key",
+                                        "value": "06c2f1597ac92d9d9e259736e5c9a827"
+                                    },
+                                    {
+                                        "name": "targetDt",
+                                        "value": "{{78.targetDateFinal}}"
+                                    }
+                                ],
+                                "url": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json",
+                                "gzip": true,
+                                "method": "get",
+                                "headers": [],
+                                "timeout": "",
+                                "useMtls": false,
+                                "authPass": "",
+                                "authUser": "",
+                                "bodyType": "",
+                                "serializeUrl": false,
+                                "shareCookies": false,
+                                "parseResponse": true,
+                                "followRedirect": true,
+                                "useQuerystring": false,
+                                "followAllRedirects": false,
+                                "rejectUnauthorized": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 273,
+                                    "y": 797,
+                                    "name": "일별 박스오피스 API"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "qs": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null,
+                                                null
+                                            ]
+                                        },
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "GET"
+                                        },
+                                        "headers": {
+                                            "mode": "chose"
+                                        },
+                                        "bodyType": {
+                                            "label": "Empty"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "handleErrors",
+                                        "type": "boolean",
+                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useNewZLibDeCompress",
+                                        "type": "hidden"
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "url",
+                                        "type": "url",
+                                        "label": "URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "serializeUrl",
+                                        "type": "boolean",
+                                        "label": "Serialize URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "get",
+                                                "head",
+                                                "post",
+                                                "put",
+                                                "patch",
+                                                "delete",
+                                                "options"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Query String"
+                                    },
+                                    {
+                                        "name": "bodyType",
+                                        "type": "select",
+                                        "label": "Body type",
+                                        "validate": {
+                                            "enum": [
+                                                "raw",
+                                                "x_www_form_urlencoded",
+                                                "multipart_form_data"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "parseResponse",
+                                        "type": "boolean",
+                                        "label": "Parse response",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "authUser",
+                                        "type": "text",
+                                        "label": "User name"
+                                    },
+                                    {
+                                        "name": "authPass",
+                                        "type": "password",
+                                        "label": "Password"
+                                    },
+                                    {
+                                        "name": "timeout",
+                                        "type": "uinteger",
+                                        "label": "Timeout",
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    },
+                                    {
+                                        "name": "shareCookies",
+                                        "type": "boolean",
+                                        "label": "Share cookies with other HTTP modules",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "ca",
+                                        "type": "cert",
+                                        "label": "Self-signed certificate"
+                                    },
+                                    {
+                                        "name": "rejectUnauthorized",
+                                        "type": "boolean",
+                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "followRedirect",
+                                        "type": "boolean",
+                                        "label": "Follow redirect",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useQuerystring",
+                                        "type": "boolean",
+                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "gzip",
+                                        "type": "boolean",
+                                        "label": "Request compressed content",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useMtls",
+                                        "type": "boolean",
+                                        "label": "Use Mutual TLS",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "followAllRedirects",
+                                        "type": "boolean",
+                                        "label": "Follow all redirect",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 81,
+                            "module": "builtin:BasicFeeder",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "array": "{{80.data.boxOfficeResult.dailyBoxOfficeList}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 569,
+                                    "y": 791
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "array": {
+                                            "mode": "edit"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "mode": "edit",
+                                        "name": "array",
+                                        "spec": [],
+                                        "type": "array",
+                                        "label": "Array"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 82,
+                            "module": "builtin:BasicAggregator",
+                            "version": 1,
+                            "parameters": {
+                                "feeder": 81,
+                                "target": "83.rows"
+                            },
+                            "mapper": {
+                                "values": [
+                                    "{{78.targetDateFinal}}",
+                                    "{{81.rank}}",
+                                    "{{81.rankInten}}",
+                                    "{{81.movieNm}}",
+                                    "{{81.movieCd}}",
+                                    "{{81.rankOldAndNew}}",
+                                    "{{81.openDt}}",
+                                    "{{81.salesAmt}}",
+                                    "{{81.salesShare}}",
+                                    "{{81.salesInten}} ({{81.salesChange}}%)",
+                                    "{{81.salesAcc}}",
+                                    "{{81.audiCnt}}",
+                                    "{{81.audiInten}} ({{81.audiChange}}%)",
+                                    "{{81.audiAcc}}",
+                                    "{{81.scrnCnt}}",
+                                    "{{81.showCnt}}"
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 854,
+                                    "y": 789
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Iterator [81]"
+                                        },
+                                        "target": {
+                                            "label": "Rows"
+                                        }
+                                    },
+                                    "expect": {
+                                        "__IMTTARGET__": {
+                                            "nested": {
+                                                "values": {
+                                                    "mode": "chose",
+                                                    "items": [
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "values",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "text",
+                                            "label": "Column"
+                                        },
+                                        "type": "array",
+                                        "label": "Values"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 83,
+                            "module": "google-sheets:addMultipleRows",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 10722748
+                            },
+                            "mapper": {
+                                "rows": "{{82.array}}",
+                                "sheetId": "일별 박스오피스",
+                                "spreadsheetId": "1WIvtZP3p75PrUiXku3_cxfsiOWZIyB6Q4EykX0uevt8",
+                                "tableFirstRow": "A1:Z1",
+                                "insertDataOption": "INSERT_ROWS",
+                                "valueInputOption": "USER_ENTERED",
+                                "insertUnformatted": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1137,
+                                    "y": 786
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "rows": {
+                                            "mode": "edit"
+                                        },
+                                        "sheetId": {
+                                            "mode": "edit"
+                                        },
+                                        "tableFirstRow": {
+                                            "label": "A-Z"
+                                        },
+                                        "insertDataOption": {
+                                            "mode": "chose",
+                                            "label": "Insert rows"
+                                        },
+                                        "valueInputOption": {
+                                            "mode": "chose",
+                                            "label": "User entered"
+                                        },
+                                        "insertUnformatted": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "google"
+                                            },
+                                            "label": "My Google connection (sunicflex@gmail.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:google",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "spreadsheetId",
+                                        "type": "text",
+                                        "label": "Spreadsheet ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "insertUnformatted",
+                                        "type": "boolean",
+                                        "label": "Unformatted",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "valueInputOption",
+                                        "type": "select",
+                                        "label": "Value input option"
+                                    },
+                                    {
+                                        "name": "insertDataOption",
+                                        "type": "select",
+                                        "label": "Insert data option"
+                                    },
+                                    {
+                                        "type": "hidden"
+                                    },
+                                    {
+                                        "mode": "edit",
+                                        "name": "sheetId",
+                                        "type": "select",
+                                        "label": "Sheet Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "tableFirstRow",
+                                        "type": "select",
+                                        "label": "Column range",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "A1:Z1",
+                                                "A1:BZ1",
+                                                "A1:CZ1",
+                                                "A1:DZ1",
+                                                "A1:MZ1",
+                                                "A1:ZZ1"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "mode": "edit",
+                                        "name": "rows",
+                                        "spec": {
+                                            "name": "value",
+                                            "spec": [
+                                                {
+                                                    "name": "values",
+                                                    "spec": {
+                                                        "type": "text",
+                                                        "label": "Column"
+                                                    },
+                                                    "type": "array",
+                                                    "label": "Values",
+                                                    "labels": {
+                                                        "add": "Add value"
+                                                    }
+                                                }
+                                            ],
+                                            "type": "collection",
+                                            "label": "Row"
+                                        },
+                                        "type": "array",
+                                        "label": "Rows"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu2.make.com",
+        "notes": []
+    }
+}
