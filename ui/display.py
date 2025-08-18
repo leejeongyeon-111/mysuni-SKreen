@@ -21,10 +21,10 @@ def set_korean_font() -> bool:
         if system_os == "Windows":
             font_path = "C:/Windows/Fonts/malgun.ttf"
         elif system_os == "Darwin":  # macOS
-            # 보통 이 경로 또는 /System/Library/Fonts/AppleGothic.ttf
+          
             font_path = "/System/Library/Fonts/Supplemental/AppleGothic.ttf"
         elif system_os == "Linux":
-            # 배포 환경에 흔한 경로들 중 하나
+    
             font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
         else:
             font_path = ""
@@ -38,7 +38,7 @@ def set_korean_font() -> bool:
         return True
 
     except FileNotFoundError:
-        # ❌ 경고 출력 대신 조용히 실패 처리
+        
         if SHOW_FONT_WARNING:
             st.warning("한글 폰트 파일을 찾을 수 없습니다. 그래프의 한글이 깨질 수 있습니다.")
         return False
@@ -52,16 +52,16 @@ def format_number_display(raw_value):
     if pd.isna(raw_value):
         return '-'
     try:
-        # '만' 문자가 포함된 경우
+        
         if '만' in str(raw_value):
             num_part = float(str(raw_value).replace('만', ''))
             value = int(num_part * 10000)
             return f"{value:,}"
-        # 순수 숫자 데이터인 경우
+       
         else:
             return f"{int(float(raw_value)):,}"
     except (ValueError, TypeError):
-        # 숫자로 변환할 수 없는 다른 문자열인 경우 (예: '5만 미만')
+        
         return str(raw_value)
 
 
@@ -240,4 +240,5 @@ def display_movies_list(results_df, full_df):
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
             st.markdown("---")
+
 
