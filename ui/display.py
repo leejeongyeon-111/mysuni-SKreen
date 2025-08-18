@@ -26,6 +26,9 @@ def set_korean_font():
             font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
             font_prop = fm.FontProperties(fname=font_path)
             plt.rc('font', family=font_prop.get_name())
+        except FileNotFoundError:
+            st.warning(f"한글 폰트 파일을 찾을 수 없습니다. 그래프의 한글이 깨질 수 있습니다.")
+    
 
     
     plt.rcParams['axes.unicode_minus'] = False
