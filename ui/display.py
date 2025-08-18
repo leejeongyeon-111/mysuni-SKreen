@@ -6,8 +6,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib.font_manager as fm
 import platform
+import os, platform
 
-def set_korean_font():
+
+SHOW_FONT_WARNING = False 
+
+def set_korean_font() -> bool:
     """
     운영체제에 맞는 한글 폰트를 설정합니다.
     Matplotlib 그래프에서 한글이 깨지는 현상을 방지합니다.
@@ -15,21 +19,30 @@ def set_korean_font():
     system_os = platform.system()
     try:
         if system_os == "Windows":
-            font_path = "c:/Windows/Fonts/malgun.ttf"
-            font_prop = fm.FontProperties(fname=font_path)
-            plt.rc('font', family=font_prop.get_name())
-        elif system_os == "Darwin": # macOS
+            font_path = "C:/Windows/Fonts/malgun.ttf"
+        elif system_os == "Darwin":  # macOS
+            # 보통 이 경로 또는 /System/Library/Fonts/AppleGothic.ttf
             font_path = "/System/Library/Fonts/Supplemental/AppleGothic.ttf"
-            font_prop = fm.FontProperties(fname=font_path)
-            plt.rc('font', family=font_prop.get_name())
         elif system_os == "Linux":
+            # 배포 환경에 흔한 경로들 중 하나
             font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
-            font_prop = fm.FontProperties(fname=font_path)
-            plt.rc('font', family=font_prop.get_name())
+        else:
+            font_path = ""
+
+        if not font_path or not os.path.exists(font_path):
+            raise FileNotFoundError(font_path)
+
+        font_prop = fm.FontProperties(fname=font_path)
+        plt.rc('font', family=font_prop.get_name())
+        plt.rcParams["axes.unicode_minus"] = False
+        return True
+
     except FileNotFoundError:
-        st.warning(f"한글 폰트 파일을 찾을 수 없습니다. 그래프의 한글이 깨질 수 있습니다.")
-    
-    plt.rcParams['axes.unicode_minus'] = False
+        # ❌ 경고 출력 대신 조용히 실패 처리
+        if SHOW_FONT_WARNING:
+            st.warning("한글 폰트 파일을 찾을 수 없습니다. 그래프의 한글이 깨질 수 있습니다.")
+        return False
+
 
 def format_number_display(raw_value):
     """
@@ -227,3 +240,4 @@ def display_movies_list(results_df, full_df):
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
             st.markdown("---")
+
