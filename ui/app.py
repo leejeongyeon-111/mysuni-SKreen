@@ -1,7 +1,6 @@
 # app.py
 import streamlit as st
     
-# ✅ 가장 먼저 페이지 설정
 st.set_page_config(page_title="SKreen", layout="wide")
 
 import pandas as pd
@@ -191,6 +190,7 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
 
 
 
