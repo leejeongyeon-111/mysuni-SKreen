@@ -35,6 +35,17 @@ import re
         out.append(w)  
     return out
 
+from pathlib import Path
+import sys
+
+UI_DIR = Path(__file__).resolve().parent       #
+ROOT   = UI_DIR.parent                          
+for p in (UI_DIR, ROOT):
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
+from display import show_movie_detail, display_movies_list
+
+
 SHOW_FONT_WARNING = False 
 
 def set_korean_font() -> bool:
@@ -279,6 +290,7 @@ def display_movies_list(results_df, full_df):
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
             st.markdown("---")
+
 
 
 
