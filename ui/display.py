@@ -7,7 +7,33 @@ import seaborn as sns
 import matplotlib.font_manager as fm
 import platform
 import os, platform
-
+import re
+        
+        try:
+        from googletrans import Translator
+        _gt = Translator()
+        
+        except Exception:
+        _gt = None
+        
+        @st.cache_data(show_spinner=False)
+        
+        def translate_en_to_ko(words):
+        out = []
+        
+        for w in words:
+        w = (w or "").strip()
+        
+        if not w:
+            continue
+        if _gt:
+            try:
+                out.append(_gt.translate(w, src="en", dest="ko").text)
+                continue
+            except Exception:
+                pass
+        out.append(w)  
+    return out
 
 SHOW_FONT_WARNING = False 
 
@@ -141,33 +167,6 @@ def show_movie_detail(row, full_df):
             st.pyplot(fig)
 
         # TMDB 키워드
-        import re
-        
-        try:
-        from googletrans import Translator
-        _gt = Translator()
-        
-        except Exception:
-        _gt = None
-        
-        @st.cache_data(show_spinner=False)
-        
-        def translate_en_to_ko(words):
-        out = []
-        
-        for w in words:
-        w = (w or "").strip()
-        
-        if not w:
-            continue
-        if _gt:
-            try:
-                out.append(_gt.translate(w, src="en", dest="ko").text)
-                continue
-            except Exception:
-                pass
-        out.append(w)  
-    return out
 
         # ✅ "실제 리뷰어 한줄평 — #번역된키워드" 형식
         review = str(row.get('실제 리뷰어 한줄평', '')).strip()
@@ -280,6 +279,7 @@ def display_movies_list(results_df, full_df):
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
             st.markdown("---")
+
 
 
 
