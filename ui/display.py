@@ -26,13 +26,10 @@ def set_korean_font():
             font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
             font_prop = fm.FontProperties(fname=font_path)
             plt.rc('font', family=font_prop.get_name())
-        except FileNotFoundError:
-            st.warning(f"한글 폰트 파일을 찾을 수 없습니다. 그래프의 한글이 깨질 수 있습니다.")
-    
-
+    except FileNotFoundError:
+        st.warning(f"한글 폰트 파일을 찾을 수 없습니다. 그래프의 한글이 깨질 수 있습니다.")
     
     plt.rcParams['axes.unicode_minus'] = False
-
 
 def format_number_display(raw_value):
     """
@@ -229,9 +226,4 @@ def display_movies_list(results_df, full_df):
                     st.rerun()
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
-
             st.markdown("---")
-
-
-
-
