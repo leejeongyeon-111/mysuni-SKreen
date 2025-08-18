@@ -5,6 +5,8 @@ import pandas as pd
 import subprocess
 from filters import sidebar_filters
 from search import search_movies
+import sys, os, subprocess
+from pathlib import Path
 # display.py에서 필요한 함수들을 명확하게 가져옵니다.
 from display import show_movie_detail, display_movies_list
 from streamlit_card import card
@@ -45,16 +47,52 @@ with button_col:
         st.rerun()
 
 # --- 사이드바 ---
+# --- 사이드바 ---
 with st.sidebar:
     if st.button("🔄 데이터 업데이트"):
-        with st.spinner("데이터를 수집하고 분석 중입니다..."):
-            try:
-                subprocess.run(["python", "./main.py"], check=True)
-                st.success("✅ 데이터 업데이트 완료!")
-                st.cache_data.clear()
-                st.rerun()
-            except (subprocess.CalledProcessError, FileNotFoundError):
-                st.error("데이터 업데이트 중 오류가 발생했습니다.")
+        root = Path(__file__).resolve().parents[1]   # 리포 루트 (ui/ 한 단계 위)
+        script = root / "main.py"
+
+        # ✅ Cloud에서 쓰기 가능한 임시 폴더 (여기에 CSV 저장)
+        runtime_data_dir = Path(os.getenv("RUNTIME_DATA_DIR", "/mount/tmp/data"))
+        runtime_data_dir.mkdir(parents=True, exist_ok=True)
+        runtime_csv_path = runtime_data_dir / "movies.csv"
+
+        if not script.exists():
+            st.error(f"main.py를 찾을 수 없습니다: {script}")
+        else:
+            with st.spinner("데이터를 수집하고 분석 중입니다..."):
+                env = os.environ.copy()
+                # 내부 모듈 임포트 실패 방지
+                env["PYTHONPATH"] = f"{env.get('PYTHONPATH','')}:{root}"
+                # ✅ main.py가 이 경로로 저장하도록 지시
+                env["DATA_CSV_PATH"] = str(runtime_csv_path)
+
+                try:
+                    cp = subprocess.run(
+                        [sys.executable, str(script)],  # 같은 인터프리터로 실행
+                        cwd=str(root),                  # 리포 루트에서 실행
+                        env=env,
+                        capture_output=True,            # 로그 캡처
+                        text=True,
+                        check=True,
+                    )
+                    st.success("✅ 데이터 업데이트 완료!")
+                    if cp.stdout:
+                        st.caption("로그(요약):")
+                        st.code(cp.stdout[-2000:])
+                    st.cache_data.clear()
+                    st.rerun()
+
+                except subprocess.CalledProcessError as e:
+                    st.error(f"데이터 업데이트 중 오류 (exit code {e.returncode})")
+                    if e.stdout:
+                        st.subheader("stdout"); st.code(e.stdout[-4000:])
+                    if e.stderr:
+                        st.subheader("stderr"); st.code(e.stderr[-4000:])
+                except Exception as e:
+                    st.exception(e)
+
 
 # ==========================================================
 # --- ✅ 메인 콘텐츠 표시 (상세 페이지 vs 메인 페이지) ---
@@ -144,6 +182,7 @@ else:
         else:
             # 검색어와 필터가 모두 적용된 결과를 표시합니다.
             display_movies_list(results, df)
+
 
 
 
