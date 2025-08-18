@@ -141,23 +141,11 @@ def show_movie_detail(row, full_df):
             st.pyplot(fig)
 
         # TMDB 키워드
-
-        # ✅ "실제 리뷰어 한줄평 — #번역된키워드" 형식
-        review = str(row.get('실제 리뷰어 한줄평', '')).strip()
         tmdb_keywords = str(row.get('TMDB 키워드', '')).strip()
-        
-        # 쉼표/슬래시 등 다양한 구분자 대응 + 최대 5개
-        raw_list = re.split(r'\s*[,/]\s*', tmdb_keywords) if tmdb_keywords else []
-        ko_list = translate_en_to_ko(raw_list[:5])
-        
-        hashtags = " ".join(f"#{kw}" for kw in ko_list if kw)
-        html = f"<p><b>실제 리뷰어 한줄평</b> — {review or '정보 없음'}"
-        
-        if hashtags:
-        html += f" <span style='color:#007BFF'>{hashtags}</span>"
-        html += "</p>"
-        
-        st.markdown(html, unsafe_allow_html=True)
+        if tmdb_keywords:
+            keywords_list = tmdb_keywords.split(', ')
+            hashtag_string = " ".join([f"#{kw}" for kw in keywords_list[:5]])
+            st.markdown(f"<p style='color: #007BFF;'>{hashtag_string}</p>", unsafe_allow_html=True)
 
 
     st.write(f"**줄거리**: {row.get('줄거리', '-')}")
@@ -253,6 +241,7 @@ def display_movies_list(results_df, full_df):
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
             st.markdown("---")
+
 
 
 
