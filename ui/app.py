@@ -1,161 +1,80 @@
 # app.py
 
 import streamlit as st
-
-# ✅ 반드시 가장 먼저 호출
-st.set_page_config(
-    page_title="SKreen",
-    layout="wide"
-)
-
-# 표준 라이브러리 / 외부 모듈
-import sys
-import subprocess
-from pathlib import Path
 import pandas as pd
-
-# 내부 모듈
+import subprocess
 from filters import sidebar_filters
 from search import search_movies
+# display.py에서 필요한 함수들을 명확하게 가져옵니다.
 from display import show_movie_detail, display_movies_list
+from streamlit_card import card
 
-# (옵션) streamlit-card가 없을 때도 죽지 않게 가드
-try:
-    from streamlit_card import card
-    HAS_CARD = True
-except Exception:
-    HAS_CARD = False
-
-# CSV 로더 (리포 루트의 data/movies.csv 또는 data/영화DB(임시).csv를 탐색)
-try:
-    from csv_loader import load_csv, debug_info
-except Exception as e:
-    # csv_loader가 없다면 친절한 에러 메시지
-    st.error(
-        "csv_loader 모듈을 불러오지 못했습니다. 리포 루트에 csv_loader.py를 추가해주세요.\n"
-        "임시로 업로드 방식으로 진행할 수 있습니다."
-    )
-    def load_csv():
-        return None
-    def debug_info():
-        return [], []
-
-
-# =========================
-# 데이터 로딩
-# =========================
+# --- 데이터 로딩 ---
 @st.cache_data
 def load_data():
-    """
-    csv_loader.load_csv()는 아래 순서로 CSV를 탐색해 읽습니다.
-    - 리포 루트의 data/movies.csv
-    - 리포 루트의 data/영화DB(임시).csv
-    - (있다면) 환경변수 DATA_CSV_PATH
-    인코딩은 utf-8-sig → cp949 → utf-8 순서로 시도
-    """
-    df = load_csv()
-    return df
+    """CSV 파일을 로드하고 '매력도' 컬럼을 숫자형으로 변환합니다."""
+    try:
+        df = pd.read_csv('./data/영화DB(임시).csv')
+        df['매력도'] = pd.to_numeric(df['매력도'], errors='coerce')
+        return df
+    except FileNotFoundError:
+        st.error("오류: './data/영화DB(임시).csv' 파일을 찾을 수 없습니다.")
+        return None
 
+# 데이터프레임 로드 및 페이지 설정
 df = load_data()
+st.set_page_config(layout="wide")
 
-# CSV를 찾지 못한 경우: 디버그 + 업로더 폴백
 if df is None:
-    st.error("CSV를 찾지 못했어. 아래 디버그 정보를 확인하고, 필요하면 CSV를 업로드해줘.")
-    cand, listing = debug_info()
-    if cand:
-        st.caption("🔎 Tried paths:")
-        st.write(cand)
-    st.caption("📁 CWD/data listing:")
-    st.write(listing)
+    st.stop()
 
-    up = st.file_uploader("CSV 업로드", type=["csv"])
-    if up:
-        # 업로드 파일로 진행
-        try:
-            # 한글 CSV 인코딩 안전 로드
-            for enc in ("utf-8-sig", "cp949", "utf-8"):
-                try:
-                    df = pd.read_csv(up, encoding=enc)
-                    break
-                except UnicodeDecodeError:
-                    up.seek(0)
-                    continue
-            else:
-                up.seek(0)
-                df = pd.read_csv(up)
-            st.success("업로드된 CSV로 진행할게!")
-        except Exception as e:
-            st.exception(e)
-            st.stop()
-    else:
-        st.stop()
-
-# 숫자 컬럼 정리 (매력도)
-if "매력도" in df.columns:
-    df["매력도"] = pd.to_numeric(df["매력도"], errors="coerce")
-
-# =========================
-# 세션 상태
-# =========================
+# --- 세션 상태 초기화 ---
 if "selected_movie_idx" not in st.session_state:
     st.session_state.selected_movie_idx = None
 if "query" not in st.session_state:
     st.session_state.query = ""
 
-# =========================
-# 상단: 검색 컨트롤
-# =========================
+# --- 상단 컨트롤 영역 ---
 st.markdown("## 🎬 영화 검색하기")
 search_col, button_col = st.columns([5, 1])
 with search_col:
-    st.session_state.query = st.text_input(
-        "검색어 입력",
-        value=st.session_state.query,
-        placeholder="영화 제목 입력",
-        label_visibility="collapsed"
-    )
+    st.session_state.query = st.text_input("검색어 입력", value=st.session_state.query, placeholder="영화 제목 입력", label_visibility="collapsed")
 with button_col:
     if st.button("검색하기", use_container_width=True):
         st.session_state.selected_movie_idx = None
         st.rerun()
 
-# =========================
-# 사이드바: 데이터 업데이트 실행
-# =========================
+# --- 사이드바 ---
 with st.sidebar:
     if st.button("🔄 데이터 업데이트"):
         with st.spinner("데이터를 수집하고 분석 중입니다..."):
             try:
-                # 현재 인터프리터로 main.py 실행 (환경 혼선 방지)
-                subprocess.run([sys.executable, "main.py"], check=True)
+                subprocess.run(["python", "./main.py"], check=True)
                 st.success("✅ 데이터 업데이트 완료!")
                 st.cache_data.clear()
                 st.rerun()
-            except (subprocess.CalledProcessError, FileNotFoundError) as e:
-                st.error(f"데이터 업데이트 중 오류: {e}")
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                st.error("데이터 업데이트 중 오류가 발생했습니다.")
 
-# =========================
-# 상세 페이지 or 메인 페이지
-# =========================
+# ==========================================================
+# --- ✅ 메인 콘텐츠 표시 (상세 페이지 vs 메인 페이지) ---
+# ==========================================================
 
-# 1) 상세 페이지
+# 1. 상세 페이지 표시
+# st.session_state.selected_movie_idx에 값이 있으면 이 블록만 실행됩니다.
 if st.session_state.selected_movie_idx is not None:
     if st.button("⬅️ 목록으로 돌아가기"):
         st.session_state.selected_movie_idx = None
         st.rerun()
 
-    # df의 인덱스로 해당 영화 선택
-    try:
-        selected_row = df.iloc[st.session_state.selected_movie_idx]
-    except Exception:
-        st.warning("선택한 항목을 찾을 수 없습니다. 목록으로 돌아갑니다.")
-        st.session_state.selected_movie_idx = None
-        st.rerun()
-
+    # 원본 df에서 인덱스로 영화 정보를 찾아 상세 페이지 함수 호출
+    selected_row = df.iloc[st.session_state.selected_movie_idx]
     show_movie_detail(selected_row, df)
 
-# 2) 메인 페이지
+# 2. 메인 페이지 표시 (상세보기가 아닐 때)
+# st.session_state.selected_movie_idx가 None이면 이 블록이 실행됩니다.
 else:
+    # "AI VoD 추천작" 섹션
     st.markdown("---")
     gradient_style = """
         background-image: linear-gradient(to right, #AA0000, #FFFFFF);
@@ -166,88 +85,62 @@ else:
     """
     st.markdown(f"<h2 style='{gradient_style}'>✨ AI추천 매력도 Top5 VOD</h2>", unsafe_allow_html=True)
 
-    # 상위 5개
-    top_5_movies = (
-        df.dropna(subset=['매력도'])
-          .sort_values(by='매력도', ascending=False)
-          .head(5)
-    )
-
-    poster_cols = st.columns(5) if len(top_5_movies) >= 1 else [st]
-
-    for i, (idx, row) in enumerate(top_5_movies.iterrows()):
-        with poster_cols[i % len(poster_cols)]:
-            clicked = False
-            poster_url = row.get('url', '') or row.get('poster_url', '') or row.get('image', '')
-
-            if HAS_CARD and poster_url:
-                try:
-                    clicked = card(
-                        title="",
-                        text="",
-                        image=poster_url,
-                        key=f"top5_{idx}",
-                        styles={
-                            "card": {
-                                "width": "100%",
-                                "height": "400px",
-                                "margin": "0px",
-                                "border-width": "0px",
-                                "padding": "0px",
-                                "box-shadow": "none"
-                            },
-                            "filter": {
-                                "background-color": "rgba(0, 0, 0, 0)"
-                            }
-                        }
-                    )
-                except Exception:
-                    # 카드 에러 시 폴백
-                    st.image(poster_url, use_column_width=True)
-            else:
-                if poster_url:
-                    st.image(poster_url, use_column_width=True)
-                else:
-                    st.write("포스터 이미지 없음")
-
-            if clicked:
-                st.session_state.selected_movie_idx = idx
+    top_5_movies = df.dropna(subset=['매력도']).sort_values(by='매력도', ascending=False).head(5)
+    poster_cols = st.columns(5)
+    for i, (_, row) in enumerate(top_5_movies.iterrows()):
+        with poster_cols[i]:
+            # streamlit-card를 사용해 포스터를 클릭 가능하게 만듭니다.
+            has_clicked = card(
+                title="", text="", image=row.get('url', ''), key=f"top5_{row.name}",
+                styles={
+                    "card": {
+                        "width": "100%",
+                        "height": "400px",
+                        "margin": "0px",
+                        "border-width": "0px",
+                        "padding": "0px",
+                        "box-shadow": "none"
+                    },
+                    "filter": {
+                        "background-color": "rgba(0, 0, 0, 0)"  
+                    }
+                } 
+            )
+            if has_clicked:
+                st.session_state.selected_movie_idx = row.name
                 st.rerun()
-
-            # 타이틀/매력도 표기
-            title_text = str(row.get('영화명', '제목 없음'))
-            try:
-                charm = row.get('매력도')
-                charm_txt = f"{int(charm):,}" if pd.notna(charm) else "N/A"
-            except Exception:
-                charm_txt = "N/A"
-
             st.markdown(
                 f"""
                 <div style="text-align: center;">
-                    <b>{title_text}</b><br>
-                    <small>매력도: {charm_txt}</small>
+                    <b>{row['영화명']}</b><br>
+                    <small>매력도: {int(row['매력도']):,}</small>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
 
+    # "검색 결과" 섹션
     st.markdown("---")
 
-    # 필터 수집 및 검색/필터 적용
+    # 1. 항상 사이드바 필터를 생성하고, 사용자가 선택한 필터 값을 가져옵니다.
     filters = sidebar_filters(df)
+
+    # 2. search_movies 함수를 한 번만 호출하여 필터링과 검색을 동시에 처리합니다.
+    #    (이 함수는 검색어가 비어있을 때 필터만 적용해야 합니다.)
     results = search_movies(st.session_state.query, filters, df)
 
-    # 결과 표시
+    # 3. 필터링 및 검색 결과에 따라 적절한 제목과 목록을 표시합니다.
     if not st.session_state.query:
         st.markdown("### 전체 영화 목록 DB")
-        if results is None or results.empty:
+        if results.empty:
             st.warning("선택한 필터에 해당하는 영화가 없습니다.")
         else:
+            # 필터만 적용된 결과를 표시합니다.
             display_movies_list(results, df)
     else:
         st.markdown(f"**'{st.session_state.query}'**에 대한 검색 결과입니다. (필터 적용됨)")
-        if results is None or results.empty:
-            st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
+        if results.empty:
+            st.info(f"선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
+            # 검색어와 필터가 모두 적용된 결과를 표시합니다.
             display_movies_list(results, df)
