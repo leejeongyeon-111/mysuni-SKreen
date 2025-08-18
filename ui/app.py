@@ -26,11 +26,11 @@ except Exception:
 def load_data():
     """CSV 파일을 로드하고 '매력도'를 숫자형으로 변환"""
     try:
-        df = pd.read_csv('./data/영화DB(임시).csv')
+        df = pd.read_csv('../data/영화DB(임시).csv')
         df['매력도'] = pd.to_numeric(df['매력도'], errors='coerce')
         return df
     except FileNotFoundError:
-        st.error("오류: './data/영화DB(임시).csv' 파일을 찾을 수 없습니다.")
+        st.error("오류: '../data/영화DB(임시).csv' 파일을 찾을 수 없습니다.")
         return None
 
 # 데이터프레임 로드
@@ -141,3 +141,4 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
