@@ -7,29 +7,6 @@ import seaborn as sns
 import matplotlib.font_manager as fm
 import platform
 
-def set_korean_font():
-    """
-    운영체제에 맞는 한글 폰트를 설정합니다.
-    Matplotlib 그래프에서 한글이 깨지는 현상을 방지합니다.
-    """
-    system_os = platform.system()
-    try:
-        if system_os == "Windows":
-            font_path = "c:/Windows/Fonts/malgun.ttf"
-            font_prop = fm.FontProperties(fname=font_path)
-            plt.rc('font', family=font_prop.get_name())
-        elif system_os == "Darwin": # macOS
-            font_path = "/System/Library/Fonts/Supplemental/AppleGothic.ttf"
-            font_prop = fm.FontProperties(fname=font_path)
-            plt.rc('font', family=font_prop.get_name())
-        elif system_os == "Linux":
-            font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
-            font_prop = fm.FontProperties(fname=font_path)
-            plt.rc('font', family=font_prop.get_name())
-    except FileNotFoundError:
-        st.warning(f"한글 폰트 파일을 찾을 수 없습니다. 그래프의 한글이 깨질 수 있습니다.")
-    
-    plt.rcParams['axes.unicode_minus'] = False
 
 def format_number_display(raw_value):
     """
@@ -226,4 +203,5 @@ def display_movies_list(results_df, full_df):
                     st.rerun()
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
+
             st.markdown("---")
