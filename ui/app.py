@@ -92,7 +92,7 @@ with button_col:
 
 # --- 사이드바 (배포 안전: 캐시 새로고침만) ---
 with st.sidebar:
-    if st.button("🔄 원격 CSV 새로고침"):
+    if st.button("🔄 데이터 업데이트"):
         st.cache_data.clear()
         st.rerun()
 
@@ -192,3 +192,4 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
