@@ -7,43 +7,6 @@ import seaborn as sns
 import matplotlib.font_manager as fm
 import platform
 import os, platform
-import re
-        
-        try:
-        from googletrans import Translator
-        _gt = Translator()
-        
-        except Exception:
-        _gt = None
-        
-        @st.cache_data(show_spinner=False)
-        
-        def translate_en_to_ko(words):
-        out = []
-        
-        for w in words:
-        w = (w or "").strip()
-        
-        if not w:
-            continue
-        if _gt:
-            try:
-                out.append(_gt.translate(w, src="en", dest="ko").text)
-                continue
-            except Exception:
-                pass
-        out.append(w)  
-    return out
-
-from pathlib import Path
-import sys
-
-UI_DIR = Path(__file__).resolve().parent       #
-ROOT   = UI_DIR.parent                          
-for p in (UI_DIR, ROOT):
-    if str(p) not in sys.path:
-        sys.path.insert(0, str(p))
-from display import show_movie_detail, display_movies_list
 
 
 SHOW_FONT_WARNING = False 
@@ -290,6 +253,7 @@ def display_movies_list(results_df, full_df):
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
             st.markdown("---")
+
 
 
 
