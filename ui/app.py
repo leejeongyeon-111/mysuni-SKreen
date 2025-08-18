@@ -7,7 +7,7 @@ st.markdown(""
         font-family: 'Nanum Gothic', sans-serif;
 }
 </style>
-""", unsafe_allow_html=True)
+unsafe_allow_html=True)
 
 
 def main():
@@ -207,6 +207,7 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
 
 
 
