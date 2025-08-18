@@ -5,6 +5,18 @@ import streamlit as st
 # ✅ 가장 먼저 페이지 설정
 st.set_page_config(page_title="SKreen", layout="wide")
 
+import streamlit as st
+
+hide_streamlit_warnings_style = """
+<style>
+.st-emotion-cache-1f1t5x8.e1nzilvr4 {
+    display: none;
+}
+</style>
+"""
+st.markdown(hide_streamlit_warnings_style, unsafe_allow_html=True)
+
+
 import pandas as pd
 from pathlib import Path
 import sys, os
@@ -192,5 +204,6 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
 
 
