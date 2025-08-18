@@ -32,6 +32,7 @@ def set_korean_font():
     plt.rcParams['axes.unicode_minus'] = False
 
 
+import streamlit as st
 
 hide_streamlit_warnings_style = """
 <style>
@@ -240,4 +241,5 @@ def display_movies_list(results_df, full_df):
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
 
             st.markdown("---")
+
 
