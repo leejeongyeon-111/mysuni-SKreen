@@ -32,7 +32,7 @@ VoD 콘텐츠 정보를 빠르고 정확하게 탐색하고 추천하는 자동�
 - `data/영화DB(임시).csv` : 유사작/경쟁작 및 매력도가 추가된 데이터
 
 ## 참고
-- 모델 학습 코드는 [steps/ML.ipynb](mysuni-SKreen/steps/ML.ipynb) 참고
+- 모델 학습 코드는 [steps/ML.ipynb](/steps/ML.ipynb) 참고
 
 ## 데모
 실행해보기 : https://mysuni-skreen-dzyhglebrs723hy2zodqzd.streamlit.app/
