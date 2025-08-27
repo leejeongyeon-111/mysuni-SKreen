@@ -33,6 +33,7 @@ VoD 콘텐츠 정보를 빠르고 정확하게 탐색하고 추천하는 자동�
 
 ## 참고
 - 모델 학습 코드는 [steps/ML.ipynb](/steps/ML.ipynb) 참고
+- [노트북 미리보기 (nbviewer)](https://nbviewer.org/github/leejeongyeon-111/mysuni-SKreen/blob/main/steps/ML.ipynb)
 
 ## 데모
 실행해보기 : https://mysuni-skreen-dzyhglebrs723hy2zodqzd.streamlit.app/
