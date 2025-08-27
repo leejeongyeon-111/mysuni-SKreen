@@ -20,7 +20,7 @@ except Exception:
     HAS_CARD = False
 
 # --- 데이터 로딩 ---
-RAW_URL = "https://raw.githubusercontent.com/leejeongyeon-111/mysuni-SKreen/main/data/%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%92%E1%85%AADB(%E1%84%8B%E1%85%B5%E1%86%B7%E1%84%89%E1%85%B5).csv"
+RAW_URL = './data/영화DB(임시).csv'
 
 @st.cache_data
 def load_data():
@@ -196,6 +196,7 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
 
 
 
