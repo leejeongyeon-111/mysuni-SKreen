@@ -6,7 +6,8 @@ st.set_page_config(page_title="SKreen", layout="wide")
 import pandas as pd
 from pathlib import Path
 import sys, os
-
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+import main
 from filters import sidebar_filters
 from search import search_movies
 from display import show_movie_detail, display_movies_list
@@ -195,6 +196,7 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
 
 
 
