@@ -88,11 +88,16 @@ with button_col:
         st.session_state.selected_movie_idx = None
         st.rerun()
 
-
 with st.sidebar:
     if st.button("🔄 데이터 업데이트"):
-        st.cache_data.clear()
-        st.rerun()
+        with st.spinner("데이터를 수집하고 분석 중입니다..."):
+            try:
+                main.main()  
+                st.success("✅ 데이터 업데이트 완료!")
+                st.cache_data.clear()
+                st.rerun()
+            except Exception as e:
+                st.error(f"데이터 업데이트 중 오류 발생: {e}")
 
 # ==========================================================
 # ---   메인 콘텐츠 표시 (상세 페이지 vs 메인 페이지) ---
@@ -190,6 +195,7 @@ else:
             st.info("선택한 조건에 맞는 검색 결과가 없습니다.")
         else:
             display_movies_list(results, df)
+
 
 
 
