@@ -11,15 +11,26 @@ def main():
     # step 2
 
     # step 3
-    df = pd.read_csv(file_path)
+    for enc in ("utf-8-sig", "cp949", "utf-8"):
+    try:
+        df = pd.read_csv("영화DB(임시).csv", encoding=enc)
+        break
+    except UnicodeDecodeError:
+        continue
     df['유사작'] = find_similars(df)
     df['경쟁작'] = find_competitors(df)
     df.to_csv(file_path, index=False, encoding='utf-8-sig')
 
     # step 4
-    df = pd.read_csv(file_path)
+    for enc in ("utf-8-sig", "cp949", "utf-8"):
+    try:
+        df = pd.read_csv("영화DB(임시).csv", encoding=enc)
+        break
+    except UnicodeDecodeError:
+        continue
     df['예측 매력도'] = predict_attractiveness(df, encoder_path = './steps/ordinal_encoder.pkl', model_path = './steps/rf_weighted_model.pkl')
     df.to_csv(file_path, index=False, encoding='utf-8-sig')
 
 if __name__ == "__main__":
+
     main()
