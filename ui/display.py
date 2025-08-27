@@ -145,7 +145,7 @@ def show_movie_detail(row, full_df):
         if tmdb_keywords:
             keywords_list = tmdb_keywords.split(', ')
             hashtag_string = " ".join([f"#{kw}" for kw in keywords_list[:5]])
-            st.markdown(f"<p style='color: #007BFF;'>{hashtag_string}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='color: #007BFF;'>실제 리뷰어 한줄평: {hashtag_string}</p>", unsafe_allow_html=True)
 
 
     st.write(f"**줄거리**: {row.get('줄거리', '-')}")
@@ -241,6 +241,7 @@ def display_movies_list(results_df, full_df):
             
             # 각 영화 아이템 아래에 구분선을 추가하여 가독성을 높입니다.
             st.markdown("---")
+
 
 
 
